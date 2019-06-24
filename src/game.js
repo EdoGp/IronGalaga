@@ -4,16 +4,57 @@ let background = new Image();
 background.src = './images/background.gif';
 
 class Game {
-	constructor() {
-		this.ship = new Ship();
-		this.invaders = [];
+	constructor(score, lives, level = 1) {
+		this.ship = new Ship(lives);
+		this.invaders = this.createLevel(level);
 		this.invadersBullets = [];
-		this.score = 0;
+		this.score = score;
 	}
 	addInvader(x, y, invader = 'enemy1') {
 		let newInvader = new Invader(x, y, invader);
 		newInvader.move();
 		this.invaders.push(newInvader);
+	}
+	createLevel(level) {
+		let invaders = [];
+		let xCoord = 265;
+		switch (level) {
+			case 1:
+				for (let x = 0; x < 10; x++) {
+					let invader = new Invader(xCoord + x * 33, 55, 'enemy1');
+					invader.move();
+					invaders.push(invader);
+				}
+				break;
+			case 2:
+				for (let x = 0; x < 10; x++) {
+					let invader = new Invader(xCoord + x * 33, 55, 'enemy2');
+					invader.move();
+					invaders.push(invader);
+				}
+				break;
+			case 3:
+				for (let x = 0; x < 10; x++) {
+					let invader = new Invader(xCoord + x * 33, 55, 'enemy1');
+					invader.move();
+					invaders.push(invader);
+				}
+				for (let x = 0; x < 10; x++) {
+					let invader = new Invader(xCoord + x * 33, 90, 'enemy2');
+					invader.move();
+					invaders.push(invader);
+				}
+				break;
+			default:
+				for (let x = 0; x < 7; x++) {
+					let invader = new Invader(xCoord + x * 33, 55, 'enemy1');
+					invader.move();
+					invaders.push(invader);
+				}
+				break;
+				break;
+		}
+		return invaders;
 	}
 }
 
@@ -46,9 +87,9 @@ class Bullet {
 }
 
 class Ship {
-	constructor() {
+	constructor(lives) {
 		this.image = this.imageCreator('./images/galaga.png');
-		this.lives = 3;
+		this.lives = lives;
 		this.bullets = [];
 		this.x = 300;
 		this.y = 568;
@@ -176,13 +217,7 @@ window.onload = function() {
 	ctx.fill();
 
 	document.getElementById('start-button').onclick = function() {
-		theGame = new Game();
-		theGame.addInvader(265, 55);
-		theGame.addInvader(300, 55);
-		theGame.addInvader(335, 55);
-		theGame.addInvader(370, 55);
-		theGame.addInvader(405, 55);
-		theGame.addInvader(440, 55);
+		theGame = new Game(0, 3, 3);
 		animate();
 		invaderShoot();
 	};
@@ -284,6 +319,7 @@ window.onload = function() {
 					setTimeout(() => {
 						theGame.ship.respawn = false;
 						theGame.ship.canShoot = true;
+						theGame = new Game(theGame.score, theGame.ship.lives);
 					}, 1500);
 				}
 			}
