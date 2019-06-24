@@ -1,0 +1,5 @@
+#game-board {
+	border: 1px solid black;
+	margin: 0 auto;
+	background-image: url('./../images/background.gif');
+}
