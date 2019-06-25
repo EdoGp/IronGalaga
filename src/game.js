@@ -6,55 +6,66 @@ background.src = './images/background.gif';
 class Game {
 	constructor(score, lives, level = 1) {
 		this.ship = new Ship(lives);
-		this.invaders = this.createLevel(level);
+		this.invaders = [];
 		this.invadersBullets = [];
 		this.score = score;
+		this.createLevel(level);
 	}
 	addInvader(x, y, invader = 'enemy1') {
 		let newInvader = new Invader(x, y, invader);
 		newInvader.move();
 		this.invaders.push(newInvader);
 	}
+
 	createLevel(level) {
-		let invaders = [];
-		let xCoord = 265;
+		let xCoord = 56;
 		switch (level) {
 			case 1:
 				for (let x = 0; x < 10; x++) {
-					let invader = new Invader(xCoord + x * 33, 55, 'enemy1');
-					invader.move();
-					invaders.push(invader);
+					this.addInvader(xCoord + x * 26, 55, 'enemy1');
 				}
 				break;
 			case 2:
 				for (let x = 0; x < 10; x++) {
-					let invader = new Invader(xCoord + x * 33, 55, 'enemy2');
-					invader.move();
-					invaders.push(invader);
+					this.addInvader(xCoord + x * 26, 55, 'enemy2');
 				}
 				break;
 			case 3:
 				for (let x = 0; x < 10; x++) {
-					let invader = new Invader(xCoord + x * 33, 55, 'enemy1');
-					invader.move();
-					invaders.push(invader);
+					this.addInvader(xCoord + x * 26, 55, 'enemy1');
 				}
 				for (let x = 0; x < 10; x++) {
-					let invader = new Invader(xCoord + x * 33, 90, 'enemy2');
-					invader.move();
-					invaders.push(invader);
+					this.addInvader(xCoord + x * 26, 79, 'enemy2');
 				}
 				break;
 			default:
 				for (let x = 0; x < 7; x++) {
-					let invader = new Invader(xCoord + x * 33, 55, 'enemy1');
-					invader.move();
-					invaders.push(invader);
+					this.addInvader(xCoord + x * 26, 55, 'enemy1');
 				}
 				break;
-				break;
 		}
-		return invaders;
+	}
+
+	moveInvaders() {
+		this.invaders.forEach((invader) => {
+			invader.move();
+		});
+	}
+
+	changeInvadersDirection() {
+		for (let i = 0; i < this.invaders.length; i++) {
+			if (this.invaders[i].x <= 5) {
+				this.invaders.forEach((invader) => {
+					invader.direction = 'right';
+					invader.y += 15;
+				});
+			} else if (this.invaders[i].x >= 568) {
+				this.invaders.forEach((invader) => {
+					invader.direction = 'left';
+					invader.y += 15;
+				});
+			}
+		}
 	}
 }
 
@@ -161,32 +172,32 @@ class Invader {
 		this.y = y;
 		this.height = 24;
 		this.width = 24;
+		this.direction = 'left';
 	}
 	draw() {
 		ctx.drawImage(this.image, this.x, this.y);
 	}
 	move() {
-		let direction = 'left';
-		setInterval(() => {
-			if (direction === 'left') {
-				this.x -= 10;
-			} else if (direction === 'right') {
-				this.x += 10;
-			}
-			if (this.x > 568) {
-				this.x = 568;
-				this.y += 35;
-				direction = 'left';
-			}
-			if (this.x < 0) {
-				this.x = 0;
-				this.y += 35;
-				direction = 'right';
-			}
-			if (this.y > 568) {
-				this.y = 10;
-			}
-		}, 1000);
+		// setInterval(() => {
+		if (this.direction === 'left') {
+			this.x -= 10;
+		} else if (this.direction === 'right') {
+			this.x += 10;
+		}
+		if (this.x > 568) {
+			this.x = 568;
+			// this.y += 35;
+			// this.direction = 'left';
+		}
+		if (this.x < 0) {
+			this.x = 0;
+			// this.y += 24;
+			// this.direction = 'right';
+		}
+		// if (this.y > 568) {
+		// 	this.y = 10;
+		// }
+		// }, 1000);
 	}
 
 	destroy() {
@@ -239,7 +250,23 @@ window.onload = function() {
 			checkCollisionShipBullets();
 			checkShipBullets();
 			checkCollisionInvadersBullets();
-		}, 50);
+			checkLives();
+			checkLevel();
+			theGame.changeInvadersDirection();
+			theGame.moveInvaders();
+		}, 750);
+	}
+
+	function checkLives() {
+		if (theGame.ship.lives === 0) {
+			console.log('You lost!');
+		}
+	}
+
+	function checkLevel() {
+		if (theGame.invaders.length === 0) {
+			console.log('all invaders killed, you won!');
+		}
 	}
 
 	function invaderShoot() {
@@ -319,7 +346,11 @@ window.onload = function() {
 					setTimeout(() => {
 						theGame.ship.respawn = false;
 						theGame.ship.canShoot = true;
-						theGame = new Game(theGame.score, theGame.ship.lives);
+						theGame = new Game(
+							theGame.score,
+							theGame.ship.lives,
+							theGame.level,
+						);
 					}, 1500);
 				}
 			}
