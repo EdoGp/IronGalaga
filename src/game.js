@@ -9,34 +9,42 @@ class Game {
 		this.invaders = [];
 		this.invadersBullets = [];
 		this.score = score;
+		this.level = level;
 		this.createLevel(level);
 	}
 	addInvader(x, y, invader = 'enemy1') {
 		let newInvader = new Invader(x, y, invader);
-		newInvader.move();
-		this.invaders.push(newInvader);
+		return newInvader;
 	}
 
 	createLevel(level) {
 		let xCoord = 56;
+		let invaderRow = [];
 		switch (level) {
 			case 1:
 				for (let x = 0; x < 10; x++) {
-					this.addInvader(xCoord + x * 26, 55, 'enemy1');
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy1'));
 				}
+				this.invaders.push(invaderRow);
 				break;
 			case 2:
 				for (let x = 0; x < 10; x++) {
-					this.addInvader(xCoord + x * 26, 55, 'enemy2');
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
 				}
+				this.invaders.push(invaderRow);
 				break;
 			case 3:
+				let invaderRow2 = [];
 				for (let x = 0; x < 10; x++) {
-					this.addInvader(xCoord + x * 26, 55, 'enemy1');
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy1'));
 				}
 				for (let x = 0; x < 10; x++) {
-					this.addInvader(xCoord + x * 26, 79, 'enemy2');
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy2'));
 				}
+				this.invaders.push(invaderRow);
+				this.invaders.push(invaderRow2);
+				break;
+			case 0:
 				break;
 			default:
 				for (let x = 0; x < 7; x++) {
@@ -47,23 +55,31 @@ class Game {
 	}
 
 	moveInvaders() {
-		this.invaders.forEach((invader) => {
-			invader.move();
-		});
+		setInterval(() => {
+			this.invaders.forEach((row) => {
+				row.forEach((invader) => {
+					invader.move();
+				});
+			});
+		}, 1000);
 	}
 
 	changeInvadersDirection() {
-		for (let i = 0; i < this.invaders.length; i++) {
-			if (this.invaders[i].x <= 5) {
-				this.invaders.forEach((invader) => {
-					invader.direction = 'right';
-					invader.y += 15;
-				});
-			} else if (this.invaders[i].x >= 568) {
-				this.invaders.forEach((invader) => {
-					invader.direction = 'left';
-					invader.y += 15;
-				});
+		if (this.invaders.length > 0 && this.invaders[0].length > 0) {
+			for (let i = 0; i < this.invaders.length; i++) {
+				if (this.invaders[i][0].x < 10) {
+					for (let j = 0; j < this.invaders[i].length; j++) {
+						this.invaders[i][j].direction = 'right';
+						this.invaders[i][j].y += 20;
+						this.invaders[i][j].x += 5;
+					}
+				} else if (this.invaders[i][this.invaders[i].length - 1].x > 560) {
+					for (let j = 0; j < this.invaders[i].length; j++) {
+						this.invaders[i][j].direction = 'left';
+						this.invaders[i][j].y += 20;
+						this.invaders[i][j].x -= 5;
+					}
+				}
 			}
 		}
 	}
@@ -178,26 +194,17 @@ class Invader {
 		ctx.drawImage(this.image, this.x, this.y);
 	}
 	move() {
-		// setInterval(() => {
 		if (this.direction === 'left') {
-			this.x -= 10;
+			this.x -= 15;
 		} else if (this.direction === 'right') {
-			this.x += 10;
+			this.x += 15;
 		}
 		if (this.x > 568) {
 			this.x = 568;
-			// this.y += 35;
-			// this.direction = 'left';
 		}
 		if (this.x < 0) {
 			this.x = 0;
-			// this.y += 24;
-			// this.direction = 'right';
 		}
-		// if (this.y > 568) {
-		// 	this.y = 10;
-		// }
-		// }, 1000);
 	}
 
 	destroy() {
@@ -228,7 +235,7 @@ window.onload = function() {
 	ctx.fill();
 
 	document.getElementById('start-button').onclick = function() {
-		theGame = new Game(0, 3, 3);
+		theGame = new Game(0, 3, 1);
 		animate();
 		invaderShoot();
 	};
@@ -244,36 +251,43 @@ window.onload = function() {
 	};
 
 	function animate() {
+		theGame.moveInvaders();
 		setInterval(() => {
 			ctx.clearRect(0, 0, 600, 600);
 			drawElements();
 			checkCollisionShipBullets();
-			checkShipBullets();
 			checkCollisionInvadersBullets();
 			checkLives();
 			checkLevel();
+			checkShipBullets();
 			theGame.changeInvadersDirection();
-			theGame.moveInvaders();
-		}, 750);
+		}, 50);
 	}
 
 	function checkLives() {
 		if (theGame.ship.lives === 0) {
-			console.log('You lost!');
+			theGame = new Game(theGame.score, 0, 0);
 		}
 	}
 
 	function checkLevel() {
-		if (theGame.invaders.length === 0) {
-			console.log('all invaders killed, you won!');
+		if (theGame.invaders.length > 0 && theGame.invaders[0].length === 0) {
+			theGame = new Game(theGame.score, theGame.ship.lives, theGame.level + 1);
+			theGame.moveInvaders();
 		}
 	}
 
 	function invaderShoot() {
 		setInterval(() => {
-			if (Math.floor(Math.random() * theGame.invaders.length) === 3) {
-				let randomInvader = Math.floor(Math.random() * theGame.invaders.length);
-				theGame.invadersBullets.push(theGame.invaders[randomInvader].shoot());
+			if (theGame.invaders.length > 0) {
+				if (Math.floor(Math.random() * theGame.invaders[0].length) === 3) {
+					let randomInvader = Math.floor(
+						Math.random() * theGame.invaders.length,
+					);
+					theGame.invadersBullets.push(
+						theGame.invaders[0][randomInvader].shoot(),
+					);
+				}
 			}
 		}, 3000);
 	}
@@ -286,8 +300,10 @@ window.onload = function() {
 	}
 
 	function drawInvaders() {
-		theGame.invaders.forEach((invader) => {
-			invader.draw();
+		theGame.invaders.forEach((row) => {
+			row.forEach((invader) => {
+				invader.draw();
+			});
 		});
 	}
 
@@ -316,17 +332,19 @@ window.onload = function() {
 
 	function checkCollisionShipBullets() {
 		theGame.ship.bullets.forEach((bullet, bulletsIndex) => {
-			theGame.invaders.forEach((invader, invadersIndex) => {
-				if (
-					bullet.x < invader.x + invader.width &&
-					bullet.x + bullet.width > invader.x &&
-					bullet.y < invader.y + invader.height &&
-					bullet.y + bullet.height > invader.y
-				) {
-					theGame.ship.bullets.splice(bulletsIndex, 1);
-					theGame.invaders.splice(invadersIndex, 1);
-					theGame.score += 10;
-				}
+			theGame.invaders.forEach((row, rowIndex) => {
+				row.forEach((invader, invadersIndex) => {
+					if (
+						bullet.x < invader.x + invader.width &&
+						bullet.x + bullet.width > invader.x &&
+						bullet.y < invader.y + invader.height &&
+						bullet.y + bullet.height > invader.y
+					) {
+						theGame.ship.bullets.splice(bulletsIndex, 1);
+						theGame.invaders[rowIndex].splice(invadersIndex, 1);
+						theGame.score += 10;
+					}
+				});
 			});
 		});
 	}
@@ -351,6 +369,7 @@ window.onload = function() {
 							theGame.ship.lives,
 							theGame.level,
 						);
+						theGame.moveInvaders();
 					}, 1500);
 				}
 			}
