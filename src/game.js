@@ -147,7 +147,6 @@ class Game {
 	}
 
 	moveInvaders() {
-		// setInterval(() => {
 		if (frames % 100 === 0) {
 			this.invaders.forEach((row) => {
 				row.forEach((invader) => {
@@ -155,7 +154,6 @@ class Game {
 				});
 			});
 		}
-		// }, 1000);
 	}
 
 	changeInvadersDirection() {
@@ -270,24 +268,39 @@ class Ship {
 	}
 
 	shotDown() {
-		let dmgShip = this.imageCreator('./images/explosion.png');
+		this.image = this.imageCreator('./images/explosion1.png');
+		setTimeout(() => {
+			this.image = this.imageCreator('./images/explosion2.png');
+		}, 600);
+		setTimeout(() => {
+			this.image = this.imageCreator('./images/explosion3.png');
+		}, 1200);
+		setTimeout(() => {
+			this.image = this.imageCreator('./images/explosion4.png');
+		}, 1800);
+		setTimeout(() => {
+			this.imageCreator('./images/galaga.png');
+		}, 2400);
+
 		let startingPoint = 0;
-		setInterval(() => {
-			setInterval(() => {
-				ctx.drawImage(
-					dmgShip,
-					startingPoint,
-					0,
-					32,
-					32,
-					this.x,
-					this.y,
-					32,
-					32,
-				);
-			}, 0.5);
-			startingPoint += 32;
-		}, 500);
+
+		// setInterval(() => {
+		// 	setInterval(() => {
+		// 		console.log('shotdown');
+		// 		// ctx.drawImage(
+		// 		// 	dmgShip,
+		// 		// 	startingPoint,
+		// 		// 	0,
+		// 		// 	32,
+		// 		// 	32,
+		// 		// 	this.x,
+		// 		// 	this.y,
+		// 		// 	32,
+		// 		// 	32,
+		// 		// );
+		// 	}, 0.5);
+		// 	startingPoint += 32;
+		// }, 500);
 	}
 
 	draw() {
@@ -376,6 +389,7 @@ window.onload = function() {
 		checkShipBullets();
 		theGame.changeInvadersDirection();
 		frames += 1;
+
 		requestAnimationFrame(animate);
 		// }, 1);
 	}
