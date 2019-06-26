@@ -281,26 +281,6 @@ class Ship {
 		setTimeout(() => {
 			this.imageCreator('./images/galaga.png');
 		}, 2400);
-
-		let startingPoint = 0;
-
-		// setInterval(() => {
-		// 	setInterval(() => {
-		// 		console.log('shotdown');
-		// 		// ctx.drawImage(
-		// 		// 	dmgShip,
-		// 		// 	startingPoint,
-		// 		// 	0,
-		// 		// 	32,
-		// 		// 	32,
-		// 		// 	this.x,
-		// 		// 	this.y,
-		// 		// 	32,
-		// 		// 	32,
-		// 		// );
-		// 	}, 0.5);
-		// 	startingPoint += 32;
-		// }, 500);
 	}
 
 	draw() {
@@ -379,7 +359,6 @@ window.onload = function() {
 
 	function animate() {
 		theGame.moveInvaders();
-		// setInterval(() => {
 		ctx.clearRect(0, 0, 600, 600);
 		drawElements();
 		checkCollisionShipBullets();
@@ -391,7 +370,6 @@ window.onload = function() {
 		frames += 1;
 
 		requestAnimationFrame(animate);
-		// }, 1);
 	}
 
 	function checkLives() {
@@ -459,7 +437,6 @@ window.onload = function() {
 		ctx.fillText(`Score: ${theGame.score}`, 5, 25);
 		ctx.fillText(`Lives:`, 5, 50);
 		drawLives();
-		ctx.fillText(`IronGalaga`, 495, 25);
 		ctx.fillStyle = 'black';
 	}
 
@@ -519,7 +496,6 @@ window.onload = function() {
 					theGame.ship.canShoot = false;
 					theGame.ship.shotDown();
 					setTimeout(() => {
-						theGame.ship.respawn = false;
 						theGame.ship.canShoot = true;
 						theGame = new Game(
 							theGame.score,
@@ -528,6 +504,7 @@ window.onload = function() {
 						);
 						theGame.moveInvaders();
 					}, 2400);
+					theGame.ship.respawn = false;
 				}
 			}
 		});
