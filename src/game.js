@@ -30,7 +30,7 @@ class Game {
 				for (let x = 0; x < 5; x++) {
 					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
 				}
-				xCoord += 50;
+				xCoord += 52;
 				for (let x = 5; x < 10; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy1'));
 				}
@@ -50,7 +50,7 @@ class Game {
 				for (let x = 3; x < 5; x++) {
 					invaderRow3.push(this.addInvader(xCoord + x * 26, 103, 'enemy2'));
 				}
-				xCoord += 50;
+				xCoord += 52;
 				for (let x = 5; x < 10; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
 				}
@@ -65,7 +65,7 @@ class Game {
 				this.invaders.push(invaderRow3);
 				break;
 			case 3:
-				xCoord -= 20;
+				xCoord -= 26;
 				for (let x = 0; x < 6; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
 				}
@@ -78,7 +78,7 @@ class Game {
 				for (let x = 3; x < 6; x++) {
 					invaderRow4.push(this.addInvader(xCoord + x * 26, 127, 'enemy1'));
 				}
-				xCoord += 80;
+				xCoord += 52;
 				for (let x = 5; x < 11; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
 				}
@@ -97,7 +97,7 @@ class Game {
 				this.invaders.push(invaderRow4);
 				break;
 			case 4:
-				xCoord -= 20;
+				xCoord -= 26;
 				for (let x = 0; x < 7; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
 				}
@@ -113,7 +113,7 @@ class Game {
 				for (let x = 4; x < 7; x++) {
 					invaderRow5.push(this.addInvader(xCoord + x * 26, 151, 'enemy2'));
 				}
-				xCoord += 80;
+				xCoord += 52;
 				for (let x = 5; x < 12; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
 				}
@@ -161,15 +161,15 @@ class Game {
 				for (let i = 0; i < this.invaders.length; i++) {
 					for (let j = 0; j < this.invaders[i].length; j++) {
 						this.invaders[i][j].direction = 'right';
-						this.invaders[i][j].y += 20;
+						this.invaders[i][j].y += 10;
 						this.invaders[i][j].x += 5;
 					}
 				}
 			} else if (this.invaders[0][this.invaders[0].length - 1].x > 560) {
 				for (let i = 0; i < this.invaders.length; i++) {
-					for (let j = 0; j < this.invaders[0].length; j++) {
+					for (let j = 0; j < this.invaders[i].length; j++) {
 						this.invaders[i][j].direction = 'left';
-						this.invaders[i][j].y += 20;
+						this.invaders[i][j].y += 10;
 						this.invaders[i][j].x -= 5;
 					}
 				}
@@ -282,12 +282,10 @@ class Ship {
 					32,
 					32,
 				);
-			}, 1);
+			}, 0.5);
 			startingPoint += 32;
-		}, 700);
+		}, 500);
 	}
-
-	// shield() {}
 
 	draw() {
 		ctx.drawImage(this.image, this.x, this.y);
@@ -312,12 +310,6 @@ class Invader {
 			this.x -= 25;
 		} else if (this.direction === 'right') {
 			this.x += 25;
-		}
-		if (this.x > 568) {
-			this.x = 568;
-		}
-		if (this.x < 0) {
-			this.x = 0;
 		}
 	}
 
