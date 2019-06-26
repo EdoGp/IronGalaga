@@ -1,5 +1,6 @@
 let theGame;
 let ctx;
+let frames = 0;
 
 class Game {
 	constructor(score, lives, level = 1) {
@@ -146,13 +147,15 @@ class Game {
 	}
 
 	moveInvaders() {
-		setInterval(() => {
+		// setInterval(() => {
+		if (frames % 100 === 0) {
 			this.invaders.forEach((row) => {
 				row.forEach((invader) => {
 					invader.move();
 				});
 			});
-		}, 1000);
+		}
+		// }, 1000);
 	}
 
 	changeInvadersDirection() {
@@ -363,16 +366,18 @@ window.onload = function() {
 
 	function animate() {
 		theGame.moveInvaders();
-		setInterval(() => {
-			ctx.clearRect(0, 0, 600, 600);
-			drawElements();
-			checkCollisionShipBullets();
-			checkCollisionInvadersBullets();
-			checkLives();
-			checkLevel();
-			checkShipBullets();
-			theGame.changeInvadersDirection();
-		}, 1);
+		// setInterval(() => {
+		ctx.clearRect(0, 0, 600, 600);
+		drawElements();
+		checkCollisionShipBullets();
+		checkCollisionInvadersBullets();
+		checkLives();
+		checkLevel();
+		checkShipBullets();
+		theGame.changeInvadersDirection();
+		frames += 1;
+		requestAnimationFrame(animate);
+		// }, 1);
 	}
 
 	function checkLives() {
