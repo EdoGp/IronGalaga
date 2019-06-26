@@ -1,5 +1,17 @@
 #game-board {
 	border: 1px solid black;
 	margin: 0 auto;
+	display: block;
 	background-image: url('./../images/background.gif');
+}
+
+button {
+	margin: 0 auto;
+	padding: 10px;
+	display: block;
+	background-color: green;
+	color: white;
+	font-size: 16px;
+	border: none;
+	font-family: 'Press Start 2P', cursive;
 }

@@ -91,25 +91,25 @@ class Bullet {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
-		this.height = 10;
-		this.width = 5;
+		this.height = 15;
+		this.width = 10;
 	}
 	imageCreator(imageUrl) {
-		let img = new Image();
+		let img = new Image(imageUrl, this.x, this.y, this.width, this.height);
 		img.src = imageUrl;
 		return img;
 	}
 	move() {
 		setInterval(() => {
 			if (this.direction === 'up') {
-				this.y -= 23;
+				this.y -= 25;
 			} else if (this.direction === 'down') {
-				this.y += 23;
+				this.y += 25;
 			}
 		}, 500);
 	}
 	draw() {
-		ctx.drawImage(this.image, this.x, this.y);
+		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 	}
 }
 
@@ -169,8 +169,29 @@ class Ship {
 			this.canShoot = false;
 			setTimeout(() => {
 				this.canShoot = true;
-			}, 500);
+			}, 1500);
 		}
+	}
+
+	shotDown() {
+		let dmgShip = this.imageCreator('./images/explosion.png');
+		let startingPoint = 0;
+		setInterval(() => {
+			setInterval(() => {
+				ctx.drawImage(
+					dmgShip,
+					startingPoint,
+					0,
+					32,
+					32,
+					this.x,
+					this.y,
+					32,
+					32,
+				);
+			}, 50);
+			startingPoint += 32;
+		}, 700);
 	}
 
 	// shield() {}
@@ -195,9 +216,9 @@ class Invader {
 	}
 	move() {
 		if (this.direction === 'left') {
-			this.x -= 15;
+			this.x -= 25;
 		} else if (this.direction === 'right') {
-			this.x += 15;
+			this.x += 25;
 		}
 		if (this.x > 568) {
 			this.x = 568;
@@ -235,7 +256,7 @@ window.onload = function() {
 	ctx.fill();
 
 	document.getElementById('start-button').onclick = function() {
-		theGame = new Game(0, 3, 1);
+		theGame = new Game(0, 3, 3);
 		animate();
 		invaderShoot();
 	};
@@ -261,7 +282,7 @@ window.onload = function() {
 			checkLevel();
 			checkShipBullets();
 			theGame.changeInvadersDirection();
-		}, 50);
+		}, 1);
 	}
 
 	function checkLives() {
@@ -280,16 +301,37 @@ window.onload = function() {
 	function invaderShoot() {
 		setInterval(() => {
 			if (theGame.invaders.length > 0) {
-				if (Math.floor(Math.random() * theGame.invaders[0].length) === 3) {
-					let randomInvader = Math.floor(
-						Math.random() * theGame.invaders.length,
-					);
-					theGame.invadersBullets.push(
-						theGame.invaders[0][randomInvader].shoot(),
-					);
+				if (theGame.invaders.length === 1) {
+					if (
+						Math.floor(Math.random() * theGame.invaders[0].length) % 2 ===
+						0
+					) {
+						let randomInvader = Math.floor(
+							Math.random() * theGame.invaders[0].length,
+						);
+						theGame.invadersBullets.push(
+							theGame.invaders[0][randomInvader].shoot(),
+						);
+					}
+				} else if (theGame.invaders.length > 1) {
+					for (let i = 0; i < theGame.invaders.length; i++) {
+						for (let j = 0; j < theGame.invaders[i].length; j++) {
+							if (
+								Math.floor(Math.random() * theGame.invaders[0].length) % 5 ===
+								0
+							) {
+								let randomInvader = Math.floor(
+									Math.random() * theGame.invaders[i].length,
+								);
+								theGame.invadersBullets.push(
+									theGame.invaders[i][randomInvader - 1].shoot(),
+								);
+							}
+						}
+					}
 				}
 			}
-		}, 3000);
+		}, 2000);
 	}
 
 	function drawElements() {
@@ -350,17 +392,19 @@ window.onload = function() {
 	}
 
 	function checkCollisionInvadersBullets() {
-		theGame.invadersBullets.forEach((bullet) => {
+		theGame.invadersBullets.forEach((bullet, index) => {
 			if (
 				bullet.x < theGame.ship.x + theGame.ship.width &&
 				bullet.x + bullet.width > theGame.ship.x &&
 				bullet.y < theGame.ship.y + theGame.ship.height &&
 				bullet.y + bullet.height > theGame.ship.y
 			) {
+				theGame.invadersBullets.splice(index, 1);
 				if (!theGame.ship.respawn) {
 					theGame.ship.lives -= 1;
 					theGame.ship.respawn = true;
 					theGame.ship.canShoot = false;
+					theGame.ship.shotDown();
 					setTimeout(() => {
 						theGame.ship.respawn = false;
 						theGame.ship.canShoot = true;
@@ -370,7 +414,7 @@ window.onload = function() {
 							theGame.level,
 						);
 						theGame.moveInvaders();
-					}, 1500);
+					}, 2400);
 				}
 			}
 		});
