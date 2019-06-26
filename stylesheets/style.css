@@ -1,6 +1,7 @@
 body {
 	font-family: 'Press Start 2P', cursive;
-	background-color: rgb(42, 46, 61);
+	margin: 0;
+	padding: 0;
 }
 
 #game-board {
@@ -22,9 +23,12 @@ button {
 }
 
 .main {
-	margin: 90px auto;
+	background-color: rgb(42, 46, 61);
+	margin: 0 auto;
 	display: flex;
 	justify-content: center;
+	align-content: center;
+	height: 100vh;
 }
 
 .logos {
@@ -34,6 +38,14 @@ button {
 	flex-direction: column;
 	margin: 50px;
 }
+
+.logos-description {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 50px;
+}
+
 .how-to {
 	display: flex;
 	align-items: center;
@@ -51,13 +63,25 @@ button {
 }
 
 .galaga {
-	max-width: 300px;
+	max-width: 200px;
+	margin: 20px;
+	display: block;
+}
+.galaga-description {
+	max-width: 150px;
 	margin: 20px;
 	display: block;
 }
 
 .ironhack {
 	max-width: 150px;
+	margin: 20px;
+	display: block;
+	filter: drop-shadow(-1px 1px 0 white) drop-shadow(1px -1px 0 white)
+		drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+}
+.ironhack-description {
+	max-width: 70px;
 	margin: 20px;
 	display: block;
 	filter: drop-shadow(-1px 1px 0 white) drop-shadow(1px -1px 0 white)
@@ -72,6 +96,20 @@ button {
 .controller-spacebar {
 	width: 200px;
 	padding: 10px;
+}
+
+.game {
+	background-color: black;
+	height: 100vh;
+	display: flex;
+	justify-content: space-around;
+}
+
+.game > canvas {
+	border: 5px solid rgb(42, 46, 61);
+}
+.right-side-game {
+	color: white;
 }
 
 .hidden {
