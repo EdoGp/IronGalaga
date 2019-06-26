@@ -343,6 +343,9 @@ window.onload = function() {
 	ctx.fill();
 
 	document.getElementById('start-button').onclick = function() {
+		document.getElementsByClassName('main')[0].classList.add('hidden');
+		document.getElementsByClassName('game')[0].classList.remove('hidden');
+
 		theGame = new Game(0, 3, 1);
 		animate();
 		invaderShoot();
@@ -435,9 +438,19 @@ window.onload = function() {
 		ctx.fillStyle = 'white';
 		ctx.font = '20px Arial';
 		ctx.fillText(`Score: ${theGame.score}`, 5, 25);
-		ctx.fillText(`Lives: ${theGame.ship.lives}`, 5, 50);
+		ctx.fillText(`Lives:`, 5, 50);
+		drawLives();
 		ctx.fillText(`IronGalaga`, 495, 25);
 		ctx.fillStyle = 'black';
+	}
+
+	function drawLives() {
+		let lives = new Image();
+		lives.src = './images/ironhack_logo2.png';
+		// let img = new Image(imageUrl, this.x, this.y, this.width, this.height);
+		for (let i = 0; i < theGame.ship.lives; i++) {
+			ctx.drawImage(lives, 62 + i * 30, 30, 25, 25);
+		}
 	}
 
 	function drawBullets() {

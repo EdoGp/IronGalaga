@@ -1,3 +1,8 @@
+body {
+	font-family: 'Press Start 2P', cursive;
+	background-color: rgb(42, 46, 61);
+}
+
 #game-board {
 	border: 1px solid black;
 	margin: 0 auto;
@@ -8,11 +13,66 @@
 
 button {
 	margin: 0 auto;
-	padding: 10px;
+	padding: 18px;
 	display: block;
 	background-color: green;
 	color: white;
-	font-size: 16px;
+	font-size: 18px;
 	border: none;
-	font-family: 'Press Start 2P', cursive;
+}
+
+.main {
+	margin: 90px auto;
+	display: flex;
+	justify-content: center;
+}
+
+.logos {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin: 50px;
+}
+.how-to {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	color: white;
+}
+
+.how-to__description {
+	padding: 10px;
+	font-size: 14px;
+	line-height: 16px;
+	letter-spacing: 2px;
+}
+
+.galaga {
+	max-width: 300px;
+	margin: 20px;
+	display: block;
+}
+
+.ironhack {
+	max-width: 150px;
+	margin: 20px;
+	display: block;
+	filter: drop-shadow(-1px 1px 0 white) drop-shadow(1px -1px 0 white)
+		drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+}
+
+.controller-keys {
+	width: 150px;
+	padding: 10px;
+}
+
+.controller-spacebar {
+	width: 200px;
+	padding: 10px;
+}
+
+.hidden {
+	display: none;
 }

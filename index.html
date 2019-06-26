@@ -12,9 +12,31 @@
 		<title>IronGalaga</title>
 	</head>
 	<body>
-		<canvas id="game-board" width="600" height="600"></canvas>
-		<br />
-		<button id="start-button">Insert Coin</button>
+		<div class="main">
+			<div class="logos">
+				<img class="ironhack" src="./images/ironhack_logo.png" alt="" />
+				<img class="galaga" src="./images/galaga_logo.png" alt="" />
+			</div>
+			<div class="how-to">
+				<h3>How to play IronGalaga</h3>
+				<p class="how-to__description">
+					Use your arrow keys to move up, down, and to the sides. Press your
+					space bar to shoot the alien ships
+				</p>
+				<img class="controller-keys" src="./images/keys.png" alt="keys" />
+				<img
+					class="controller-spacebar"
+					src="./images/spacebar.png"
+					alt="keys"
+				/>
+				<div class="button">
+					<button id="start-button">Insert Coin</button>
+				</div>
+			</div>
+		</div>
+		<div class="game hidden">
+			<canvas id="game-board" width="600" height="600"></canvas>
+		</div>
 		<script type="text/javascript" src="./src/game.js"></script>
 	</body>
 </html>
