@@ -256,7 +256,7 @@ window.onload = function() {
 	ctx.fill();
 
 	document.getElementById('start-button').onclick = function() {
-		theGame = new Game(0, 3, 3);
+		theGame = new Game(0, 3, 1);
 		animate();
 		invaderShoot();
 	};
@@ -303,7 +303,7 @@ window.onload = function() {
 			if (theGame.invaders.length > 0) {
 				if (theGame.invaders.length === 1) {
 					if (
-						Math.floor(Math.random() * theGame.invaders[0].length) % 2 ===
+						Math.floor(Math.random() * theGame.invaders[0].length) % 9 ===
 						0
 					) {
 						let randomInvader = Math.floor(
@@ -317,14 +317,14 @@ window.onload = function() {
 					for (let i = 0; i < theGame.invaders.length; i++) {
 						for (let j = 0; j < theGame.invaders[i].length; j++) {
 							if (
-								Math.floor(Math.random() * theGame.invaders[0].length) % 5 ===
+								Math.floor(Math.random() * theGame.invaders[0].length) % 9 ===
 								0
 							) {
 								let randomInvader = Math.floor(
 									Math.random() * theGame.invaders[i].length,
 								);
 								theGame.invadersBullets.push(
-									theGame.invaders[i][randomInvader - 1].shoot(),
+									theGame.invaders[i][randomInvader].shoot(),
 								);
 							}
 						}
