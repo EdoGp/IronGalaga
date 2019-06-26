@@ -16,7 +16,7 @@ class Game {
 	}
 
 	createLevel(level) {
-		let xCoord = 140;
+		let xCoord = 105;
 		let invaderRow = [];
 		let invaderRow2 = [];
 		let invaderRow3 = [];
