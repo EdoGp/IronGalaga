@@ -1,7 +1,5 @@
 let theGame;
 let ctx;
-let background = new Image();
-background.src = './images/background.gif';
 
 class Game {
 	constructor(score, lives, level = 1) {
@@ -18,31 +16,124 @@ class Game {
 	}
 
 	createLevel(level) {
-		let xCoord = 56;
+		let xCoord = 140;
 		let invaderRow = [];
+		let invaderRow2 = [];
+		let invaderRow3 = [];
+		let invaderRow4 = [];
+		let invaderRow5 = [];
 		switch (level) {
 			case 1:
-				for (let x = 0; x < 10; x++) {
+				for (let x = 0; x < 5; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy1'));
 				}
-				this.invaders.push(invaderRow);
-				break;
-			case 2:
-				for (let x = 0; x < 10; x++) {
-					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
+				for (let x = 0; x < 5; x++) {
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
 				}
-				this.invaders.push(invaderRow);
-				break;
-			case 3:
-				let invaderRow2 = [];
-				for (let x = 0; x < 10; x++) {
+				xCoord += 50;
+				for (let x = 5; x < 10; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy1'));
 				}
-				for (let x = 0; x < 10; x++) {
-					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy2'));
+				for (let x = 5; x < 10; x++) {
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
 				}
 				this.invaders.push(invaderRow);
 				this.invaders.push(invaderRow2);
+				break;
+			case 2:
+				for (let x = 0; x < 5; x++) {
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
+				}
+				for (let x = 2; x < 5; x++) {
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
+				}
+				for (let x = 3; x < 5; x++) {
+					invaderRow3.push(this.addInvader(xCoord + x * 26, 103, 'enemy2'));
+				}
+				xCoord += 50;
+				for (let x = 5; x < 10; x++) {
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
+				}
+				for (let x = 5; x < 8; x++) {
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
+				}
+				for (let x = 5; x < 7; x++) {
+					invaderRow3.push(this.addInvader(xCoord + x * 26, 103, 'enemy2'));
+				}
+				this.invaders.push(invaderRow);
+				this.invaders.push(invaderRow2);
+				this.invaders.push(invaderRow3);
+				break;
+			case 3:
+				xCoord -= 20;
+				for (let x = 0; x < 6; x++) {
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
+				}
+				for (let x = 1; x < 6; x++) {
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
+				}
+				for (let x = 2; x < 6; x++) {
+					invaderRow3.push(this.addInvader(xCoord + x * 26, 103, 'enemy2'));
+				}
+				for (let x = 3; x < 6; x++) {
+					invaderRow4.push(this.addInvader(xCoord + x * 26, 127, 'enemy1'));
+				}
+				xCoord += 80;
+				for (let x = 5; x < 11; x++) {
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
+				}
+				for (let x = 5; x < 10; x++) {
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
+				}
+				for (let x = 5; x < 9; x++) {
+					invaderRow3.push(this.addInvader(xCoord + x * 26, 103, 'enemy2'));
+				}
+				for (let x = 5; x < 8; x++) {
+					invaderRow4.push(this.addInvader(xCoord + x * 26, 127, 'enemy1'));
+				}
+				this.invaders.push(invaderRow);
+				this.invaders.push(invaderRow2);
+				this.invaders.push(invaderRow3);
+				this.invaders.push(invaderRow4);
+				break;
+			case 4:
+				xCoord -= 20;
+				for (let x = 0; x < 7; x++) {
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
+				}
+				for (let x = 1; x < 7; x++) {
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
+				}
+				for (let x = 2; x < 7; x++) {
+					invaderRow3.push(this.addInvader(xCoord + x * 26, 103, 'enemy2'));
+				}
+				for (let x = 3; x < 7; x++) {
+					invaderRow4.push(this.addInvader(xCoord + x * 26, 127, 'enemy1'));
+				}
+				for (let x = 4; x < 7; x++) {
+					invaderRow5.push(this.addInvader(xCoord + x * 26, 151, 'enemy2'));
+				}
+				xCoord += 80;
+				for (let x = 5; x < 12; x++) {
+					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
+				}
+				for (let x = 5; x < 11; x++) {
+					invaderRow2.push(this.addInvader(xCoord + x * 26, 79, 'enemy1'));
+				}
+				for (let x = 5; x < 10; x++) {
+					invaderRow3.push(this.addInvader(xCoord + x * 26, 103, 'enemy2'));
+				}
+				for (let x = 5; x < 9; x++) {
+					invaderRow4.push(this.addInvader(xCoord + x * 26, 127, 'enemy1'));
+				}
+				for (let x = 5; x < 8; x++) {
+					invaderRow5.push(this.addInvader(xCoord + x * 26, 151, 'enemy2'));
+				}
+				this.invaders.push(invaderRow);
+				this.invaders.push(invaderRow2);
+				this.invaders.push(invaderRow3);
+				this.invaders.push(invaderRow4);
+				this.invaders.push(invaderRow5);
 				break;
 			case 0:
 				break;
@@ -66,15 +157,17 @@ class Game {
 
 	changeInvadersDirection() {
 		if (this.invaders.length > 0 && this.invaders[0].length > 0) {
-			for (let i = 0; i < this.invaders.length; i++) {
-				if (this.invaders[i][0].x < 10) {
+			if (this.invaders[0][0].x < 10) {
+				for (let i = 0; i < this.invaders.length; i++) {
 					for (let j = 0; j < this.invaders[i].length; j++) {
 						this.invaders[i][j].direction = 'right';
 						this.invaders[i][j].y += 20;
 						this.invaders[i][j].x += 5;
 					}
-				} else if (this.invaders[i][this.invaders[i].length - 1].x > 560) {
-					for (let j = 0; j < this.invaders[i].length; j++) {
+				}
+			} else if (this.invaders[0][this.invaders[0].length - 1].x > 560) {
+				for (let i = 0; i < this.invaders.length; i++) {
+					for (let j = 0; j < this.invaders[0].length; j++) {
 						this.invaders[i][j].direction = 'left';
 						this.invaders[i][j].y += 20;
 						this.invaders[i][j].x -= 5;
@@ -86,13 +179,13 @@ class Game {
 }
 
 class Bullet {
-	constructor(x, y, direction, bulletImage) {
+	constructor(x, y, direction, bulletImage, height = 15, width = 10) {
 		this.image = this.imageCreator(`./images/${bulletImage}.png`);
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
-		this.height = 15;
-		this.width = 10;
+		this.height = height;
+		this.width = width;
 	}
 	imageCreator(imageUrl) {
 		let img = new Image(imageUrl, this.x, this.y, this.width, this.height);
@@ -102,9 +195,9 @@ class Bullet {
 	move() {
 		setInterval(() => {
 			if (this.direction === 'up') {
-				this.y -= 25;
+				this.y -= 35;
 			} else if (this.direction === 'down') {
-				this.y += 25;
+				this.y += 35;
 			}
 		}, 500);
 	}
@@ -189,7 +282,7 @@ class Ship {
 					32,
 					32,
 				);
-			}, 50);
+			}, 1);
 			startingPoint += 32;
 		}, 700);
 	}
@@ -233,10 +326,12 @@ class Invader {
 	}
 	shoot() {
 		let invaderBullet = new Bullet(
-			this.x,
+			this.x + 4,
 			this.y + 24,
 			'down',
 			'bulletInvader',
+			6,
+			3,
 		);
 		invaderBullet.move();
 		return invaderBullet;
@@ -302,10 +397,7 @@ window.onload = function() {
 		setInterval(() => {
 			if (theGame.invaders.length > 0) {
 				if (theGame.invaders.length === 1) {
-					if (
-						Math.floor(Math.random() * theGame.invaders[0].length) % 9 ===
-						0
-					) {
+					if (Math.floor(Math.random() * 100) % 14 === 0) {
 						let randomInvader = Math.floor(
 							Math.random() * theGame.invaders[0].length,
 						);
@@ -316,10 +408,7 @@ window.onload = function() {
 				} else if (theGame.invaders.length > 1) {
 					for (let i = 0; i < theGame.invaders.length; i++) {
 						for (let j = 0; j < theGame.invaders[i].length; j++) {
-							if (
-								Math.floor(Math.random() * theGame.invaders[0].length) % 9 ===
-								0
-							) {
+							if (Math.floor(Math.random() * 100) % 13 === 0) {
 								let randomInvader = Math.floor(
 									Math.random() * theGame.invaders[i].length,
 								);
