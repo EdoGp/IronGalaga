@@ -111,9 +111,9 @@ class Game {
 				for (let x = 3; x < 7; x++) {
 					invaderRow4.push(this.addInvader(xCoord + x * 26, 127, 'enemy1'));
 				}
-				// for (let x = 4; x < 7; x++) {
-				// 	invaderRow5.push(this.addInvader(xCoord + x * 26, 151, 'enemy2'));
-				// }
+				for (let x = 4; x < 7; x++) {
+					invaderRow5.push(this.addInvader(xCoord + x * 26, 151, 'enemy2'));
+				}
 				xCoord += 52;
 				for (let x = 5; x < 12; x++) {
 					invaderRow.push(this.addInvader(xCoord + x * 26, 55, 'enemy2'));
@@ -127,14 +127,13 @@ class Game {
 				for (let x = 5; x < 9; x++) {
 					invaderRow4.push(this.addInvader(xCoord + x * 26, 127, 'enemy1'));
 				}
-				// for (let x = 5; x < 8; x++) {
-				for (let x = 5; x < 6; x++) {
+				for (let x = 5; x < 8; x++) {
 					invaderRow5.push(this.addInvader(xCoord + x * 26, 151, 'enemy2'));
 				}
-				// this.invaders.push(invaderRow);
-				// this.invaders.push(invaderRow2);
-				// this.invaders.push(invaderRow3);
-				// this.invaders.push(invaderRow4);
+				this.invaders.push(invaderRow);
+				this.invaders.push(invaderRow2);
+				this.invaders.push(invaderRow3);
+				this.invaders.push(invaderRow4);
 				this.invaders.push(invaderRow5);
 				break;
 			case 0:
@@ -343,7 +342,7 @@ window.onload = function() {
 		document.getElementsByClassName('main')[0].classList.add('hidden');
 		document.getElementsByClassName('game')[0].classList.remove('hidden');
 
-		theGame = new Game(0, 3, 4);
+		theGame = new Game(0, 3, 1);
 		animate();
 		invaderShoot();
 	};
