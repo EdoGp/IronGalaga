@@ -370,11 +370,9 @@ window.onload = function() {
 			theGame.changeInvadersDirection();
 			frames += 1;
 		}
-		// else
 		if (theGame.level >= 5) {
 			drawWin();
 		}
-		// else
 		if (theGame.ship.lives <= 0) {
 			drawLost();
 		}
@@ -446,7 +444,7 @@ window.onload = function() {
 		ctx.fillStyle = 'black';
 	}
 
-	function drawWLost() {
+	function drawLost() {
 		ctx.textAlign = 'left';
 		ctx.fillStyle = 'red';
 		ctx.font = '40px Arial';
