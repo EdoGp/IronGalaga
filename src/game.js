@@ -448,7 +448,7 @@ window.onload = function() {
 		ctx.textAlign = 'left';
 		ctx.fillStyle = 'red';
 		ctx.font = '40px Arial';
-		ctx.fillText(`You lost, try again!`, 300, 300);
+		ctx.fillText(`You lost, try again!`, 170, 300);
 		ctx.fillStyle = 'black';
 	}
 
